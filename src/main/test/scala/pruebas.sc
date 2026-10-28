@@ -25,3 +25,44 @@ assert(res4 == (List(10, 20, 40, 50), List(30), List()))
 val estado5 = (List('m', 'n', 'o'), List('p'), List('q', 'r'))
 val res5 = aplicarMovimiento(estado5, Uno(0))
 assert(res5 == estado5)
+
+
+// --- CASOS DE PRUEBA PROPIOS: aplicarMovimientos ---
+
+// Caso 1: Maniobra vacía (0 movimientos -> retorna lista con 1 solo estado: el inicial)
+val eInicial1 = (List(1, 2, 3), List(), List())
+val resM1 = aplicarMovimientos(eInicial1, List())
+assert(resM1 == List(eInicial1))
+
+// Caso 2: Maniobra con movimientos neutros Uno(0) y Dos(0)
+val eInicial2 = (List('a', 'b'), List('c'), List('d'))
+val movs2 = List(Uno(0), Dos(0))
+val resM2 = aplicarMovimientos(eInicial2, movs2)
+assert(resM2 == List(eInicial2, eInicial2, eInicial2))
+
+// Caso 3: Secuencia alternada entre vía Uno y vía Dos
+val eInicial3 = (List("x", "y", "z"), List[String](), List[String]())
+val movs3 = List(Uno(1), Dos(1))
+val resM3 = aplicarMovimientos(eInicial3, movs3)
+assert(resM3 == List(
+  (List("x", "y", "z"), List(), List()),
+  (List("x", "y"), List("z"), List()),
+  (List("x"), List("z"), List("y"))
+))
+
+// Caso 4: Movimiento de ida y regreso (debe regresar al estado de partida)
+val eInicial4 = (List(10, 20, 30), List(40), List())
+val movs4 = List(Uno(2), Uno(-2))
+val resM4 = aplicarMovimientos(eInicial4, movs4)
+assert(resM4.last == eInicial4)
+assert(resM4.length == 3)
+
+// Caso 5: Secuencia combinada con movimientos que exceden el tamaño disponible
+val eInicial5 = (List('p'), List('q'), List('r'))
+val movs5 = List(Dos(5), Uno(-5))
+val resM5 = aplicarMovimientos(eInicial5, movs5)
+assert(resM5 == List(
+  (List('p'), List('q'), List('r')),
+  (List(), List('q'), List('p', 'r')),
+  (List('q'), List(), List('p', 'r'))
+))

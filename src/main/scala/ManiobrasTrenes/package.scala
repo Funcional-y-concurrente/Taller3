@@ -55,8 +55,16 @@ package object ManiobrasTrenes {
     }
   }
 
-  def aplicarMovimientos(e: Estado, move: Maniobra): List[Estado] = {
-    0
+  def aplicarMovimientos(e: Estado, movs: Maniobra): List[Estado] = {
+    movs match {
+      // Caso base: si no hay movimientos por aplicar, la secuencia de estados es únicamente el estado actual
+      case Nil => List(e)
+
+      // Caso recursivo: se descompone la lista en primer movimiento (m) y el resto de la maniobra (resto)
+      case m :: resto =>
+        val siguienteEstado = aplicarMovimiento(e, m)
+        e :: aplicarMovimientos(siguienteEstado, resto)
+    }
   }
 
   def definirManiobra(t1: Tren, t2: Tren): Maniobra = {
