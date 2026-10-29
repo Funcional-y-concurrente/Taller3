@@ -66,3 +66,77 @@ assert(resM5 == List(
   (List(), List('q'), List('p', 'r')),
   (List('q'), List(), List('p', 'r'))
 ))
+
+// --- CASOS DE PRUEBA PROPIOS: definirManiobra ---
+// ========================================
+// CASO 1: Trenes idénticos (caso trivial)
+// ========================================
+val t1_1 = List('a', 'b', 'c')
+val t2_1 = List('a', 'b', 'c')
+val maniobra1 = definirManiobra(t1_1, t2_1)
+// Esperado: Nil (no se necesitan movimientos)
+val verificacion1 = aplicarMovimientos((t1_1, Nil, Nil), maniobra1)
+// Debe devolver: List((List('a','b','c'), Nil, Nil))
+
+// ========================================
+// CASO 2: Tren de un solo vagón
+// ========================================
+val t1_2 = List('x')
+val t2_2 = List('x')
+val maniobra2 = definirManiobra(t1_2, t2_2)
+// Esperado: Nil
+val verificacion2 = aplicarMovimientos((t1_2, Nil, Nil), maniobra2)
+// Debe devolver: List((List('x'), Nil, Nil))
+
+// ========================================
+// CASO 3: Reversión completa del tren
+// ========================================
+val t1_3 = List('a', 'b', 'c')
+val t2_3 = List('c', 'b', 'a')
+val maniobra3 = definirManiobra(t1_3, t2_3)
+val verificacion3 = aplicarMovimientos((t1_3, Nil, Nil), maniobra3)
+
+// ========================================
+// CASO 4: Intercambio de dos vagones adyacentes
+// ========================================
+val t1_4 = List('a', 'b', 'c')
+val t2_4 = List('b', 'a', 'c')
+val maniobra4 = definirManiobra(t1_4, t2_4)
+val verificacion4 = aplicarMovimientos((t1_4, Nil, Nil), maniobra4)
+// El último estado debe ser: (List('b','a','c'), Nil, Nil)
+
+// ========================================
+// CASO 5: Rotación circular
+// ========================================
+val t1_5 = List('a', 'b', 'c', 'd', 'e')
+val t2_5 = List('e', 'a', 'b', 'c', 'd')
+val maniobra5 = definirManiobra(t1_5, t2_5)
+val verificacion5 = aplicarMovimientos((t1_5, Nil, Nil), maniobra5)
+// El último estado debe ser: (List('e','a','b','c','d'), Nil, Nil)
+
+// ========================================
+// CASO 6: Tren con números (no solo caracteres)
+// ========================================
+val t1_6 = List(1, 2, 3, 4)
+val t2_6 = List(4, 3, 2, 1)
+val maniobra6 = definirManiobra(t1_6, t2_6)
+val verificacion6 = aplicarMovimientos((t1_6, Nil, Nil), maniobra6)
+// El último estado debe ser: (List(4,3,2,1), Nil, Nil)
+
+// ========================================
+// CASO 7: Reordenamiento complejo
+// ========================================
+val t1_7 = List('a', 'b', 'c', 'd', 'e', 'f')
+val t2_7 = List('f', 'e', 'd', 'c', 'b', 'a')
+val maniobra7 = definirManiobra(t1_7, t2_7)
+val verificacion7 = aplicarMovimientos((t1_7, Nil, Nil), maniobra7)
+// El último estado debe ser: (List('f','e','d','c','b','a'), Nil, Nil)
+
+// ========================================
+// CASO 8: Intercambio de extremos
+// ========================================
+val t1_8 = List('a', 'b', 'c', 'd')
+val t2_8 = List('d', 'b', 'c', 'a')
+val maniobra8 = definirManiobra(t1_8, t2_8)
+val verificacion8 = aplicarMovimientos((t1_8, Nil, Nil), maniobra8)
+// El último estado debe ser: (List('d','b','c','a'), Nil, Nil)
